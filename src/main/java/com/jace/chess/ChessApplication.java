@@ -8,6 +8,7 @@ public class ChessApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ChessApplication.class, args);
+		System.out.println("\u001B[35mE");
 	}
 
 }
