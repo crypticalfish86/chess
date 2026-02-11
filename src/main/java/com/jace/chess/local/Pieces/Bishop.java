@@ -4,10 +4,13 @@ import com.jace.chess.local.*;
 
 public class Bishop extends Piece {
 
+    private String whiteUnicode = "\u001B[31mB";
+    private String blackUnicode = "\u001B[34mB";
+
     public Bishop(Colour pieceColour) {
         super(pieceColour);
         this.pieceType = PieceType.BISHOP;
-        this.pieceAsciiRep = Piece.BISHOP_ASCII_REP;
+        this.pieceAsciiRep = this.pieceColour == Colour.WHITE ? whiteUnicode : blackUnicode;
     }
 
     //move piece

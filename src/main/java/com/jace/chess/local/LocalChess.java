@@ -1,5 +1,7 @@
 package com.jace.chess.local;
 
+import com.jace.chess.local.Pieces.*;
+
 import java.util.ArrayList;
 
 /*This is a local simulated chess just based on the console, just so I can develop a local version first before I make
@@ -56,7 +58,42 @@ public class LocalChess {
         }
 
     //initialize the chessboard pieces
-    private void initializeChessPieces(){}
+    private void initializeChessPieces(){
+        //black back row
+        //black front row
+        Tile[] backRow = chessboard[0];
+        backRow[0].updateOccupyingPiece(new Rook(Colour.BLACK));
+        backRow[1].updateOccupyingPiece(new Knight(Colour.BLACK));
+        backRow[2].updateOccupyingPiece(new Bishop(Colour.BLACK));
+        backRow[3].updateOccupyingPiece(new Queen(Colour.BLACK));
+        backRow[4].updateOccupyingPiece(new King(Colour.BLACK));
+        backRow[5].updateOccupyingPiece(new Bishop(Colour.BLACK));
+        backRow[6].updateOccupyingPiece(new Knight(Colour.BLACK));
+        backRow[7].updateOccupyingPiece(new Rook(Colour.BLACK));
+
+        Tile[] secondBackRow = chessboard[1];
+        for (Tile tile : secondBackRow) {
+            tile.updateOccupyingPiece(new Pawn(Colour.BLACK));
+        }
+
+        //middle empty tiles
+
+        //white front row
+        Tile[] secondFrontRow = chessboard[6];
+        for (Tile tile : secondFrontRow) {
+            tile.updateOccupyingPiece(new Pawn(Colour.WHITE));
+        }
+        //white back row
+        Tile[] frontRow = chessboard[7];
+        frontRow[0].updateOccupyingPiece(new Rook(Colour.WHITE));
+        frontRow[1].updateOccupyingPiece(new Knight(Colour.WHITE));
+        frontRow[2].updateOccupyingPiece(new Bishop(Colour.WHITE));
+        frontRow[3].updateOccupyingPiece(new Queen(Colour.WHITE));
+        frontRow[4].updateOccupyingPiece(new King(Colour.WHITE));
+        frontRow[5].updateOccupyingPiece(new Bishop(Colour.WHITE));
+        frontRow[6].updateOccupyingPiece(new Knight(Colour.WHITE));
+        frontRow[7].updateOccupyingPiece(new Rook(Colour.WHITE));
+    }
 
     //game methods
 
@@ -71,11 +108,19 @@ public class LocalChess {
         for (Tile[] row : chessboard) {
             for (Tile tile : row) {
                 String colourUnicode = tile.getTileColour() == Colour.WHITE ? Tile.WHITE_TILE_COLOUR : Tile.BLACK_TILE_COLOUR;
-                System.out.print(colourUnicode + "X" + Tile.COLOUR_UNICODE_RESET);
+                String tileRepresentation = String.format(" %s ", returnOccupyingPieceOnTile(tile));
+                System.out.print(colourUnicode + tileRepresentation + Tile.COLOUR_UNICODE_RESET);//three char, replace middle with piece when its occupied
             }
             System.out.println();
         }
     }
+        private String returnOccupyingPieceOnTile(Tile tile) {
+            if (tile.getOccupyingPiece() == null) {
+                return " ";
+            } else {
+                return tile.getOccupyingPiece().getAsciiRepresentation();
+            }
+        }
 
     //displays the players dead pieces
 
