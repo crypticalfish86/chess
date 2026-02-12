@@ -1,4 +1,4 @@
-package com.jace.chess.local;
+package com.jace.chess.localchess;
 
 public enum PieceType {
     KING,
