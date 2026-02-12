@@ -1,6 +1,6 @@
 package com.jace.chess.localchess;
 
-/*This is a helper class that simply prints the chessboard it's fed it prints the chessboard in the console
+/*This is a helper class that simply prints the chessboard it's fed. It prints the chessboard in the console
 * (including pieces) each tile should be 3 characters wide with the middle replaced the occupying chess piece
 * (if there isn't a piece on the tile it should be replaced with an empty space " ")*/
 public class ChessBoardPrinter {
@@ -40,16 +40,28 @@ public class ChessBoardPrinter {
         System.out.println("\n" + BoardAscii.LETTER_COLUMN);
     }
     private String getPieceAscii(Piece piece) {
+        //if no piece just return empty ascii
         if (piece == null) {
             return BoardAscii.EMPTY;
         }
+
+
+        //start building ascii representation and add text colour
+        String asciiRep = "";
+        if (piece.getColour() == Colour.WHITE) {
+            asciiRep += BoardAscii.WHITE_PIECE_COLOUR;
+        } else {
+            asciiRep += BoardAscii.BLACK_PIECE_COLOUR;
+        }
+
+        //add and return the relevant piece type ascii
         return switch (piece.getPieceType()) {
-            case PieceType.KING -> BoardAscii.KING;
-            case PieceType.QUEEN -> BoardAscii.QUEEN;
-            case PieceType.BISHOP -> BoardAscii.BISHOP;
-            case PieceType.KNIGHT -> BoardAscii.KNIGHT;
-            case PieceType.ROOK -> BoardAscii.ROOK;
-            case PieceType.PAWN -> BoardAscii.PAWN;
+            case PieceType.KING -> asciiRep + BoardAscii.KING;
+            case PieceType.QUEEN -> asciiRep + BoardAscii.QUEEN;
+            case PieceType.BISHOP -> asciiRep + BoardAscii.BISHOP;
+            case PieceType.KNIGHT -> asciiRep + BoardAscii.KNIGHT;
+            case PieceType.ROOK -> asciiRep + BoardAscii.ROOK;
+            case PieceType.PAWN -> asciiRep + BoardAscii.PAWN;
         };
     }
 }
