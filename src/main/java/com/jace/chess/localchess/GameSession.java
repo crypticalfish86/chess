@@ -47,55 +47,11 @@ public class GameSession {
 
     /*start method (this method should start and run the actual game)*/
     public void start() {
-        printChessBoard();
+        ChessBoardPrinter chessBoardPrinter = new ChessBoardPrinter();
+        chessBoardPrinter.print(chessboard);
     }
 
-    /*print the chessboard (including pieces), each tile should be 3 characters wide with the middle replaced
-    * with the chess piece occupying the square if there is one (if not should be a space " "*/
-    public void printChessBoard() {
 
-        int rowNumber = 8;
-        for (Tile[] row : chessboard) {
-
-            //initial formatting for row
-            System.out.println();
-            System.out.print(rowNumber);
-            System.out.print(" ");
-
-            //print each tile on the row
-            for (Tile currentTile : row) {
-
-                String tileColourAscii =
-                        currentTile.getTileColour() == Colour.WHITE ?
-                                BoardAscii.WHITE_TILE_COLOUR : BoardAscii.BLACK_TILE_COLOUR;
-
-                String pieceAscii = getPieceAscii(currentTile.getHeldPiece());
-
-                String wholeTileAscii = String.format("%s %s %s",
-                        tileColourAscii,
-                        pieceAscii,
-                        BoardAscii.RESET_BACKGROUND_COLOUR);
-
-                System.out.print(wholeTileAscii);
-            }
-
-            rowNumber--;
-        }
-        System.out.println("\n" + BoardAscii.LETTER_COLUMN);
-    }
-        private String getPieceAscii(Piece piece) {
-            if (piece == null) {
-                return BoardAscii.EMPTY;
-            }
-            return switch (piece.getPieceType()) {
-                case PieceType.KING -> BoardAscii.KING;
-                case PieceType.QUEEN -> BoardAscii.QUEEN;
-                case PieceType.BISHOP -> BoardAscii.BISHOP;
-                case PieceType.KNIGHT -> BoardAscii.KNIGHT;
-                case PieceType.ROOK -> BoardAscii.ROOK;
-                case PieceType.PAWN -> BoardAscii.PAWN;
-            };
-        }
 
     /*inGameMethods (these methods take in input from the user
     e.g. (Ne4 meaning "Knight to e4") and change the chessboard state)*/
