@@ -1,5 +1,10 @@
 package com.jace.chess.localchess;
 
+/*
+* This record holds all unicode/ascii text to represent the chessboard in our game, including text colours,
+* console background colours for tiles, text colours for pieces and the letter column for the coords of our
+* chess game (the row number had to be integrated in the actual printing so it's in ChessBoardPrinter class).
+*/
 public record BoardAscii() {
     //console background colour
     public static final String WHITE_TILE_COLOUR = "\u001B[47m"; //the tile colour (background colour) to display for white

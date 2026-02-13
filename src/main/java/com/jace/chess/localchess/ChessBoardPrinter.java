@@ -39,29 +39,30 @@ public class ChessBoardPrinter {
         }
         System.out.println("\n" + BoardAscii.LETTER_COLUMN);
     }
-    private String getPieceAscii(Piece piece) {
-        //if no piece just return empty ascii
-        if (piece == null) {
-            return BoardAscii.EMPTY;
+        //helper class to return the piece ascii
+        private String getPieceAscii(Piece piece) {
+            //if no piece just return empty ascii
+            if (piece == null) {
+                return BoardAscii.EMPTY;
+            }
+
+
+            //start building ascii representation and add text colour
+            String asciiRep = "";
+            if (piece.getColour() == Colour.WHITE) {
+                asciiRep += BoardAscii.WHITE_PIECE_COLOUR;
+            } else {
+                asciiRep += BoardAscii.BLACK_PIECE_COLOUR;
+            }
+
+            //add and return the relevant piece type ascii
+            return switch (piece.getPieceType()) {
+                case PieceType.KING -> asciiRep + BoardAscii.KING;
+                case PieceType.QUEEN -> asciiRep + BoardAscii.QUEEN;
+                case PieceType.BISHOP -> asciiRep + BoardAscii.BISHOP;
+                case PieceType.KNIGHT -> asciiRep + BoardAscii.KNIGHT;
+                case PieceType.ROOK -> asciiRep + BoardAscii.ROOK;
+                case PieceType.PAWN -> asciiRep + BoardAscii.PAWN;
+            };
         }
-
-
-        //start building ascii representation and add text colour
-        String asciiRep = "";
-        if (piece.getColour() == Colour.WHITE) {
-            asciiRep += BoardAscii.WHITE_PIECE_COLOUR;
-        } else {
-            asciiRep += BoardAscii.BLACK_PIECE_COLOUR;
-        }
-
-        //add and return the relevant piece type ascii
-        return switch (piece.getPieceType()) {
-            case PieceType.KING -> asciiRep + BoardAscii.KING;
-            case PieceType.QUEEN -> asciiRep + BoardAscii.QUEEN;
-            case PieceType.BISHOP -> asciiRep + BoardAscii.BISHOP;
-            case PieceType.KNIGHT -> asciiRep + BoardAscii.KNIGHT;
-            case PieceType.ROOK -> asciiRep + BoardAscii.ROOK;
-            case PieceType.PAWN -> asciiRep + BoardAscii.PAWN;
-        };
-    }
 }

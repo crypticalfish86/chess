@@ -1,13 +1,11 @@
 package com.jace.chess.localchess;
 
-import java.util.ArrayList;
 
+//The top class that manages the whole game, class holds the chessboard and manages turns and input from user
 public class GameSession {
 
 
     private final ChessBoard chessboard; //The chessboard (always 8x8 grid)
-    private final ArrayList<Piece> deadPiecesWhite = new ArrayList<Piece>(); //the pieces of white captured by black
-    private final ArrayList<Piece> deadPiecesBlack = new ArrayList<Piece>(); //the pieces of black captured by white
     private boolean isWhiteTurn; //if true it is whites turn, if false it's blacks turn
 
     private static final ChessBoardPrinter chessBoardPrinter = new ChessBoardPrinter(); //the printer for our chessboards

@@ -1,5 +1,6 @@
 package com.jace.chess.localchess;
 
+//Each individual Tile on the chessboard, accepts new incoming pieces (so long as it's a valid incoming piece)
 public class Tile {
     private final Colour tileColour;
     private final int yCoord;
