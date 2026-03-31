@@ -1,4 +1,4 @@
-package com.jace.chess.localchess;
+package com.jace.chess.localChess;
 
 public enum Colour {
     BLACK,
