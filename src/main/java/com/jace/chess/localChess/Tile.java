@@ -9,6 +9,7 @@ public class Tile {
     private Tile right; //The tile to the right of this one
     private Tile down; //The tile below this one
 
+    private Chessboard chessboard; //The chessboard the tile is a part of
     private final Colour tileColour; //Tile colour (to be used for GUI)
     private Piece occupyingPiece; //The piece currently occupying this tile
     private final String coordinate; //The coordinate marker of the tile in the chessboard
@@ -17,8 +18,9 @@ public class Tile {
      * Constructor for the Tile class
      * @param colour The colour of the tile
      */
-    public Tile(Colour colour, String coordinate) {
+    public Tile(Colour colour, Chessboard chessboard, String coordinate) {
         this.tileColour = colour;
+        this.chessboard = chessboard;
         this.coordinate = coordinate;
     }
 
@@ -116,6 +118,7 @@ public class Tile {
         if (this.occupyingPiece == null || this.occupyingPiece.getColour() != incomingPiece.getColour()) { //checks validity of move
             Piece oldPiece = this.occupyingPiece;
             this.occupyingPiece = incomingPiece;
+            incomingPiece.updateOccupyingTile(this);
 
             if (oldPiece == null) {//If there's an old piece to deal with, remove it from the board
                 return Optional.empty();
