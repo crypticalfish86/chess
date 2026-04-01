@@ -102,10 +102,10 @@ public class Tile {
      * To be invoked when moving a piece off of a tile.
      * @return The piece moved from the tile
      */
-    public Piece removePieceFromTile() throws NullPointerException {
-        if (this.occupyingPiece == null) {
+    public Piece removePieceFromTile() /*throws NullPointerException*/ {
+        /*if (this.occupyingPiece == null) {
             throw new NullPointerException("Error: You've tried to remove a piece from an empty tile");
-        }
+        }*/
         Piece movingPiece = this.occupyingPiece;
         this.occupyingPiece = null;
         return movingPiece;
@@ -118,6 +118,7 @@ public class Tile {
      * @return An optional containing the piece that was taken by the incoming piece
      */
     public Optional<Piece> updatePiece(Piece incomingPiece) {
+        incomingPiece.getOccupyingTile().removePieceFromTile();
         Optional<Piece> oldPiece = this.getPiece();
         this.occupyingPiece = incomingPiece;
         this.occupyingPiece.updateOccupyingTile(this);

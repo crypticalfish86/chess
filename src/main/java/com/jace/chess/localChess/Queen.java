@@ -153,4 +153,7 @@ public class Queen extends Piece {
             validMovesRemain = downRight.isPresent() && checkTile(downRight.get());
         }
     }
+
+    @Override
+    public void uniqueAction() {}; //no unique action
 }

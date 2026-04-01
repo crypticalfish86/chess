@@ -4,6 +4,8 @@ import java.util.Optional;
 
 public class Pawn extends Piece {
 
+    boolean firstMove;
+
     /**
      * Pawn moves only up (or diagonally when there's enemy piece)
      * @param colour Colour of the piece
@@ -13,6 +15,15 @@ public class Pawn extends Piece {
      */
     public Pawn(Colour colour, int id, Chessboard chessboard, Tile tile) {
         super(colour, PieceType.PAWN, id, chessboard, tile);
+        this.firstMove = true;
+    }
+
+    //setter
+
+    //unique action is to end the double move ability
+    @Override
+    public void uniqueAction() {
+        this.firstMove = false;
     }
 
     /**
@@ -49,7 +60,17 @@ public class Pawn extends Piece {
                 }
             }
         }
+
+        //if it's the pawns first move then it can do a double move
+        if (this.firstMove) {
+            if (up.isPresent() && up.get().tileAbove().isPresent()) {
+                if (up.get().tileAbove().get().getPiece().isEmpty()) {
+                    this.possibleMoves.add(up.get().tileAbove().get());
+                }
+            }
+        }
     }
+
 
 
     public void transformPiece(PieceType transformationChoice) throws IllegalArgumentException {

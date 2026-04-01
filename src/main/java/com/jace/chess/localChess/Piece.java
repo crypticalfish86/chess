@@ -29,6 +29,7 @@ public abstract class Piece {
         this.chessboard = chessboard;
         this.alive = true;
         this.updateOccupyingTile(tile);
+        this.chessboard.getPieces().add(this);
     }
 
     //getters
@@ -121,10 +122,7 @@ public abstract class Piece {
      */
     public void removeFromBoard() {
         possibleMoves.clear();
-        if (this.occupyingTile != null) {
-            this.occupyingTile.removePieceFromTile();
-            this.occupyingTile = null;
-        }
+        this.occupyingTile = null;
         this.alive = false;
     }
 
@@ -133,6 +131,8 @@ public abstract class Piece {
         Optional<Piece> occupyingPiece = tile.getPiece();
         return occupyingPiece.isEmpty() || occupyingPiece.get().getColour() != this.getColour();
     }
+
+    public abstract void uniqueAction(); //for things like pawns double moves and kings castling
 
     /**
      * Returns a string representation of the piece (e.g. WHITE_KING_1)

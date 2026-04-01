@@ -8,8 +8,12 @@ public class LocalChessApplication {
         chessboard = new Chessboard(this);
     }
 
-    //start application with this method
+    //start and run application with this method
     public void startGame() {
+        ChessBoardPrinter.printChessBoard(chessboard);
+        chessboard.inputInstruction("WP4D4");
+        ChessBoardPrinter.printChessBoard(chessboard);
+        chessboard.inputInstruction("WP4D5");
         ChessBoardPrinter.printChessBoard(chessboard);
     }
 

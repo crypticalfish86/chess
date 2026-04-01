@@ -99,4 +99,7 @@ public class King extends Piece{
         }
         return false;
     }
+
+    @Override
+    public void uniqueAction() {}; //no unique action FOR NOW, ADD CASTLING SOON!
 }

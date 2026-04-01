@@ -38,6 +38,9 @@ public class ChessBoardInitializer {
         }
 
         setPiecesOnBoard(chessboard);
+        //initialize possible moves for every piece
+        chessboard.updateBoardMoves();
+        //return chessboard
         chessboard.setChessboard(initializedBoard);
     }
 

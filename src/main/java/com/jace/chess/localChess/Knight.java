@@ -101,4 +101,7 @@ public class Knight extends Piece{
             possibleMoves.add(down2Tile.tileRight().get());
         }
     }
+
+    @Override
+    public void uniqueAction() {}; //no unique action
 }

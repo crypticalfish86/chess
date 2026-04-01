@@ -102,6 +102,11 @@ public class Chessboard {
             throw new IllegalArgumentException("Error: That's not a valid square on the board for that piece to move to");
         }
 
+        //if the moving piece is a pawn, switch off the double move ability from now on
+        if (movingPiece.getPieceType().equals(PieceType.PAWN)) {
+            movingPiece.uniqueAction();
+        }
+
         //actually move the piece
         Optional<Piece> takenPiece = tileToMoveTo.updatePiece(movingPiece);
         if (takenPiece.isPresent()) {
@@ -136,5 +141,16 @@ public class Chessboard {
      */
     public void checkmate(King checkmatedKing) {
         application.endGameInCheckmate(checkmatedKing);
+    }
+
+    /**
+     * Update possible moves for all pieces left on board
+     */
+    public void updateBoardMoves() {
+        for (Piece piece : this.pieces) {
+            if (piece.getAliveStatus()) {
+                piece.updatePossibleMoves();
+            }
+        }
     }
 }

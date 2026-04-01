@@ -69,4 +69,7 @@ public class Rook extends Piece{
         }
     }
 
+    @Override
+    public void uniqueAction() {}; //no unique action
+
 }
