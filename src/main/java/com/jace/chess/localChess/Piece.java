@@ -87,9 +87,7 @@ public abstract class Piece {
      * @param newTile The new tile the piece is occupying
      */
     public void updateOccupyingTile(Tile newTile) {
-        this.occupyingTile.removePieceFromTile();
         this.occupyingTile = newTile;
-
     }
 
     /**

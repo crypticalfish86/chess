@@ -116,27 +116,12 @@ public class Tile {
      * and removing it from the board entirely
      * @param incomingPiece The incoming piece which will now occupy the tile
      * @return An optional containing the piece that was taken by the incoming piece
-     * @throws IllegalArgumentException Thrown if a player tries to take one of their own pieces
      */
-    public Optional<Piece> updatePiece(Piece incomingPiece) throws IllegalArgumentException {
-        if (this.occupyingPiece == null || this.occupyingPiece.getColour() != incomingPiece.getColour()) { //checks validity of move
-            Piece oldPiece = this.occupyingPiece;
-            this.occupyingPiece = incomingPiece;
-            incomingPiece.updateOccupyingTile(this);
-
-            if (oldPiece == null) {//If there's an old piece to deal with, remove it from the board
-                return Optional.empty();
-            } else {
-                oldPiece.removeFromBoard();
-                return Optional.of(oldPiece);
-            }
-        } else { //if move was invalid throw an error
-            String errorMessage =
-                    String.format(
-                            "Error: %s is same colour as %s", incomingPiece.toString(), this.occupyingPiece.toString()
-                    );
-            throw new IllegalArgumentException(errorMessage);
-        }
+    public Optional<Piece> updatePiece(Piece incomingPiece) {
+        Optional<Piece> oldPiece = this.getPiece();
+        this.occupyingPiece = incomingPiece;
+        this.occupyingPiece.updateOccupyingTile(this);
+        return oldPiece;
     }
 
     /**
