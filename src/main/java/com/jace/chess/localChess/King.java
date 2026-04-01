@@ -12,10 +12,10 @@ public class King extends Piece{
      * @param colour The colour of the king
      * @param tile The tile the king occupies
      */
-    public King(Colour colour, Chessboard chessboard, Tile tile) {
-        super(colour, PieceType.KING, chessboard);
-        this.updateOccupyingTile(tile);
+    public King(Colour colour, int id, Chessboard chessboard, Tile tile) {
+        super(colour, PieceType.KING, id, chessboard, tile);
         isChecked = false;
+        chessboard.setKing(this);
     }
 
     //getters
@@ -33,6 +33,7 @@ public class King extends Piece{
      */
     @Override
     public void updatePossibleMoves() {
+        this.possibleMoves.clear();
 
         //check if left tile is a valid move for king
         Optional<Tile> leftTile = this.occupyingTile.tileLeft();
@@ -82,7 +83,8 @@ public class King extends Piece{
     }
 
     //helper method to check the tiles are valid possible moves (if tile is empty or there is an opposing piece) + no check
-    private boolean checkTile(Tile tile) {
+    @Override
+    protected boolean checkTile(Tile tile) {
         Optional<Piece> occupyingPiece = tile.getPiece();
         return (occupyingPiece.isEmpty() || occupyingPiece.get().getColour() != this.getColour()) && checkForCheck(tile);
     }

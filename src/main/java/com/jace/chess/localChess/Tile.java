@@ -98,10 +98,14 @@ public class Tile {
 
     /**
      * Removes the piece from the square, setting it to null and returns the moving piece,
-     * to be used when moving a piece to another part of the board (not to take it off the board)
+     * to be used when moving a piece to another part of the board (not to take it off the board).
+     * To be invoked when moving a piece off of a tile.
      * @return The piece moved from the tile
      */
-    public Piece movePiece() {
+    public Piece removePieceFromTile() throws NullPointerException {
+        if (this.occupyingPiece == null) {
+            throw new NullPointerException("Error: You've tried to remove a piece from an empty tile");
+        }
         Piece movingPiece = this.occupyingPiece;
         this.occupyingPiece = null;
         return movingPiece;

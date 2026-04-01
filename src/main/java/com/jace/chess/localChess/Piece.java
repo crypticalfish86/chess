@@ -1,6 +1,7 @@
 package com.jace.chess.localChess;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public abstract class Piece {
 
@@ -9,17 +10,25 @@ public abstract class Piece {
     private final PieceType pieceType; //The type of piece
     protected final Chessboard chessboard; //The chessboard the piece is on
     protected Tile occupyingTile; //The tile the piece currently occupies
+    private final int pieceID; //The id of the piece (unique to each piece type per colour)
+    private boolean alive;
 
     /**
      * Super constructor for all chess pieces (to be accessed only through children)
      * @param colour The colour of the chess piece
      * @param pieceType The type of chess piece it is (e.g. KING)
+     * @param id unique id (per piecetype per colour) of piece
+     * @param chessboard the chessboard the piece is attached to
+     * @param tile the tile the piece begins on
      */
-    protected Piece(Colour colour, PieceType pieceType, Chessboard chessboard) {
+    protected Piece(Colour colour, PieceType pieceType, int id, Chessboard chessboard, Tile tile) {
         this.pieceColour = colour;
         this.possibleMoves = new ArrayList<Tile>();
         this.pieceType = pieceType;
+        this.pieceID = id;
         this.chessboard = chessboard;
+        this.alive = true;
+        this.updateOccupyingTile(tile);
     }
 
     //getters
@@ -41,6 +50,14 @@ public abstract class Piece {
     }
 
     /**
+     * Returns the id number of the piece
+     * @return The id number of the piece
+     */
+    public int getPieceID() {
+        return pieceID;
+    }
+
+    /**
      * gets the tile the piece currently occupies
      * @return The piece the tile currently occupies
      */
@@ -56,6 +73,13 @@ public abstract class Piece {
         return this.possibleMoves;
     }
 
+    /**
+     * Simple method that returns the living status of the piece
+     * @return the living status of the piece
+     */
+    public boolean getAliveStatus() {
+        return this.alive;
+    }
     //setters
 
     /**
@@ -63,7 +87,9 @@ public abstract class Piece {
      * @param newTile The new tile the piece is occupying
      */
     public void updateOccupyingTile(Tile newTile) {
+        this.occupyingTile.removePieceFromTile();
         this.occupyingTile = newTile;
+
     }
 
     /**
@@ -77,10 +103,18 @@ public abstract class Piece {
     /**
      * Method will move piece to new tile
      * @param tileToMoveTo The tile you want the piece to move to
+     * @return An optional containing the enemy piece taken (if there is one)
      * @throws IllegalArgumentException Thrown if not in the possible moves list of the piece
      */
-    public void movePiece(Tile tileToMoveTo) throws IllegalArgumentException{
-
+    public Optional<Piece> movePiece(Tile tileToMoveTo) throws IllegalArgumentException{
+        if (possibleMoves.contains(tileToMoveTo)) {
+            this.occupyingTile.removePieceFromTile();
+            this.occupyingTile = tileToMoveTo;
+            return tileToMoveTo.updatePiece(this);
+        } else {
+            String errorMessage = String.format("Error: not a valid move for %s", this.toString());
+            throw new IllegalArgumentException(errorMessage);
+        }
     }
 
 
@@ -89,11 +123,21 @@ public abstract class Piece {
      */
     public void removeFromBoard() {
         possibleMoves.clear();
+        if (this.occupyingTile != null) {
+            this.occupyingTile.removePieceFromTile();
+            this.occupyingTile = null;
+        }
+        this.alive = false;
     }
 
+    //helper method for children to check if tiles are going to be valid (to use when adding possible moves)
+    protected boolean checkTile(Tile tile) {
+        Optional<Piece> occupyingPiece = tile.getPiece();
+        return occupyingPiece.isEmpty() || occupyingPiece.get().getColour() != this.getColour();
+    }
 
     /**
-     * Returns a string representation of the piece (e.g. WHITE_KING)
+     * Returns a string representation of the piece (e.g. WHITE_KING_1)
      * @return The string representation of the piece
      */
     @Override
@@ -111,6 +155,6 @@ public abstract class Piece {
             default -> pieceType = "UNKNOWN";
         }
 
-        return String.format("%s%s", colour, pieceType);
+        return String.format("%s%s_%d", colour, pieceType, this.pieceID);
     }
 }
