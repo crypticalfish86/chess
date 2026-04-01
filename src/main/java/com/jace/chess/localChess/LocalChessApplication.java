@@ -2,6 +2,17 @@ package com.jace.chess.localChess;
 
 public class LocalChessApplication {
 
+    Chessboard chessboard; //The chessboard the game is running on
+
+    public LocalChessApplication() {
+        chessboard = new Chessboard(this);
+    }
+
+    //start application with this method
+    public void startGame() {
+        ChessBoardPrinter.printChessBoard(chessboard);
+    }
+
 
     public void endGameInCheckmate(Piece checkmatedKing) {
         if (checkmatedKing.getColour().equals(Colour.WHITE)) {
